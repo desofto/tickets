@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :user do
     type 'User'
     sequence(:email) { |n| "test_#{n}@gmail.com" }
+    password 'qweqwe'
 
     factory :client do
       type 'Client'
