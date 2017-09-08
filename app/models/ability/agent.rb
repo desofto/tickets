@@ -11,7 +11,7 @@ module Ability
       cannot :update,  ::Agent
       cannot :delete,  ::Agent
 
-      can %i(index show take), ::Request do |request|
+      can %i(index show take), ::Request, ['agent_id IS NULL OR agent_id = ?', @user.id] do |request|
         request.agent.blank? || request.agent.id == @user.id
       end
 

@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 describe API::V1::User, type: :api do
-  let(:admin) do
-    user = create(:admin)
-    user.reset_authentication_token
-    user
-  end
+  let(:admin) { create(:admin) }
 
   describe 'GET /api/v1/clients' do
     it 'returns clients with pagination' do

@@ -11,7 +11,13 @@ module API
         get do
           authorize! :index, ::Request
 
-          requests = ::Request.all
+          requests = ::Request.accessible_by(current_ability)
+          case params[:status]
+          when 'open' then requests = requests.open
+          when 'closed' then requests = requests.closed
+          when 'archived' then requests = requests.archived
+          end
+
           present :requests, paginate_collection(requests, params)
           present :total, requests.count
         end
@@ -34,15 +40,15 @@ module API
         desc "Request's messages"
         route_param :request_id do
           helpers do
-            def request
-              @request ||= ::Request.find(params[:request_id])
+            def support_request
+              @support_request ||= ::Request.accessible_by(current_ability).find(params[:request_id])
             end
           end
 
           get 'messages' do
-            authorize! :show, request
+            authorize! :show, support_request
 
-            messages = request.messages
+            messages = support_request.messages
             present :messages, paginate_collection(messages, params)
             present :total, messages.count
           end
@@ -53,49 +59,49 @@ module API
               requires :body, type: String
             end
           end
-          post do
-            authorize! :update, request
+          post 'messages' do
+            authorize! :update, support_request
 
-            request.messages.create(body: params[:message][:body])
+            support_request.messages.create(body: params[:message][:body])
 
             present 'ok'
             status :created
           end
 
           desc 'Take request'
-          post 'take' do
-            authorize! :take, request
+          put 'take' do
+            authorize! :take, support_request
 
-            request.update!(agent: current_user)
+            support_request.update!(agent: current_user)
 
-            present request
+            present support_request
           end
 
           desc 'Close request'
-          post 'close' do
-            authorize! :close, request
+          put 'close' do
+            authorize! :close, support_request
 
-            request.close!
+            support_request.close!
 
-            present request
+            present support_request
           end
 
           desc 'Open request'
-          post 'open' do
-            authorize! :open, request
+          put 'open' do
+            authorize! :open, support_request
 
-            request.open!
+            support_request.open!
 
-            present request
+            present support_request
           end
 
           desc 'Archive request'
-          post 'archive' do
-            authorize! :archive, request
+          put 'archive' do
+            authorize! :archive, support_request
 
-            request.archive!
+            support_request.archive!
 
-            present request
+            present support_request
           end
         end
       end
