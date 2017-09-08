@@ -18,6 +18,8 @@
 !/tmp/.keep
 
 /node_modules
+public/app/**/*.map
+public/app/**/*.js
 /yarn-error.log
 
 .byebug_history
