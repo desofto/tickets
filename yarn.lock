@@ -202,6 +202,10 @@ systemjs@0.19.40:
   dependencies:
     when "^3.7.5"
 
+ts-md5@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/ts-md5/-/ts-md5-1.2.2.tgz#d176bcb9daca485a0fd29e6092bd4f6d658cf727"
+
 tslib@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.7.1.tgz#bc8004164691923a79fe8378bbeb3da2017538ec"

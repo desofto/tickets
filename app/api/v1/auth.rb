@@ -29,7 +29,7 @@ module API
 
       desc 'Sign out'
       delete '/sign_out' do
-        destroy_session(current_user)
+        current_user.reset_authentication_token
         {}
       end
     end
