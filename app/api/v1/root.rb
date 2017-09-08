@@ -20,14 +20,14 @@ module API
         error!({ errors: ['You are not authorized to this resource'] }, 403)
       end
 
+      helpers API::V1::Helpers::PaginationHelpers
+
       represent ::User, with: API::V1::Entities::User
       represent ::Admin, with: API::V1::Entities::User
       represent ::Client, with: API::V1::Entities::User
       represent ::Agent, with: API::V1::Entities::User
 
       represent ::Request, with: API::V1::Entities::Request
-
-      represent ::Message, with: API::V1::Entities::Message
 
       mount API::V1::Auth
 
@@ -36,6 +36,8 @@ module API
       end
 
       mount API::V1::User
+      mount API::V1::Request
+
       mount API::V1::Ping
     end
   end

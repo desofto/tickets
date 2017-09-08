@@ -3,16 +3,22 @@
 module API
   module V1
     class User < Grape::API
-      desc 'Users list'
-      get '/users' do
-        authorize! :read, ::User
-        'qwe'
+      desc 'Clients list'
+      get '/clients' do
+        authorize! :index, ::Client
+
+        clients = ::Client.all
+        present :clients, paginate_collection(clients, params)
+        present :total, clients.count
       end
 
-      desc 'Sign out'
-      delete '/sign_out' do
-        current_user.reset_authentication_token
-        {}
+      desc 'Agents list'
+      get '/agents' do
+        authorize! :index, ::Agent
+
+        agents = ::Agent.all
+        present :agents, paginate_collection(agents, params)
+        present :total, agents.count
       end
     end
   end

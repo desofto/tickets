@@ -7,7 +7,7 @@ module API
         end
 
         def current_user
-          @current_user ||= ::User.find_by(auth_token: authentication_token)
+          @current_user ||= authentication_token && ::User.find_by(auth_token: authentication_token)
         end
 
         def current_ability

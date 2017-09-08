@@ -21,7 +21,7 @@ module API
         if user
           user.reset_authentication_token
           status :created
-          present user
+          present user, with: API::V1::Entities::Me
         else
           unauthorized!(['Please check your credentials to proceed'])
         end

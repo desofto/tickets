@@ -1,4 +1,25 @@
 module Ability
   class Agent < Ability::Base
+    def permissions
+      cannot :index,   ::Client
+      cannot :create,  ::Client
+      cannot :update,  ::Client
+      cannot :delete,  ::Client
+
+      cannot :index,   ::Agent
+      cannot :create,  ::Agent
+      cannot :update,  ::Agent
+      cannot :delete,  ::Agent
+
+      can %i(index show take), ::Request do |request|
+        request.agent.blank? || request.agent.id == @user.id
+      end
+
+      cannot :create,  ::Request
+      cannot :update,  ::Request
+      cannot :close,   ::Request
+      cannot :open,    ::Request
+      cannot :archive, ::Request
+    end
   end
 end

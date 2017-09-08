@@ -12,6 +12,19 @@ class Request < ApplicationRecord
 
   after_initialize :set_opened
 
+  def close!
+    update!(closed: Time.zone.now)
+  end
+
+  def open!
+    update!(closed: nil)
+  end
+
+  def archive!
+    update!(closed: Time.zone.now) if closed.blank?
+    update!(archived: Time.zone.now)
+  end
+
   private
 
   def set_opened
