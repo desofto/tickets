@@ -10,6 +10,8 @@ gem 'mysql2'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 
+gem 'devise'
+
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
