@@ -1,0 +1,31 @@
+default: &defaults
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+  host: localhost
+  username: dmitry
+  password: qwe
+
+development:
+  <<: *defaults
+  database: tickets_development
+
+test:
+  <<: *defaults
+  database: tickets_test<%= ENV['TEST_ENV_NUMBER'] %>
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  pool: 15
+  timeout: 5000
+  database: "<%= ENV['RDS_DB_NAME'] %>"
+  username: "<%= ENV['RDS_USERNAME'] %>"
+  host: "<%= ENV['RDS_HOSTNAME'] %>"
+  port: "<%= ENV['RDS_PORT'] %>"
+  password: "Pass1234"
+
+staging:
+  <<: *defaults
+  database: tickets_development
