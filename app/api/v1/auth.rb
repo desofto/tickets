@@ -9,7 +9,7 @@ module API
 
           return unless params[:email]
 
-          user = User.find_by(email: params[:email])
+          user = ::User.find_by(email: params[:email])
           error!({ errors: ['Invalid Email or Password.'] }, 401) unless user && user.valid_password?(params[:password])
 
           @user ||= user

@@ -11,6 +11,7 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 
 gem 'devise'
+gem 'cancancan'
 
 gem 'sidekiq'
 gem 'sidekiq-scheduler'

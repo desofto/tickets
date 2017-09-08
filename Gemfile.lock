@@ -243,6 +243,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cancancan
   capybara
   capybara-webkit
   database_cleaner

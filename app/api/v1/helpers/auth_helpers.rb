@@ -7,17 +7,17 @@ module API
         end
 
         def current_user
-          @current_user ||= User.find_by(auth_token: authentication_token) || authentication_error
+          @current_user ||= ::User.find_by(auth_token: authentication_token)
+        end
+
+        def current_ability
+          @current_ability ||= Ability::Factory.build_ability_for(current_user)
         end
 
         private
 
         def authentication_token
-          @api_token ||= params[:auth_token] || authentication_error
-        end
-
-        def authentication_error
-          error!({ errors: ['Auth Token is not provided or invalid'], internal_error_code: '9999' }, 401)
+          @api_token ||= params[:auth_token]
         end
       end
     end
