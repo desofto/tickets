@@ -31,7 +31,6 @@ export class RequestApi {
     this.list.forEach((request: any, index: number, arr: Array<any>) => {
       if(request.id == req.id) {
         this.list[index] = req;
-        this.subject.next();
       }
     });
   }
@@ -44,10 +43,10 @@ export class RequestApi {
         received(data: any) {
           if(data.is_new) {
             self.list.unshift(data.request);
-            self.subject.next();
           } else {
             self.update_request(data.request);
           }
+          self.subject.next(data.request);
         }
       });
     }
@@ -80,6 +79,18 @@ export class RequestApi {
     return this.subject.asObservable().subscribe(param);
   }
 
+  one(id: number) {
+    return new Promise((resolve, reject) => {
+      if(this.currentUserService.active && this.currentUserService.active.auth_token) {
+        this.http.get(`/api/v1/requests/${id}?auth_token=${this.currentUserService.active.auth_token}`)
+          .map((res: any) => res.json())
+          .subscribe((response: any) => {
+            resolve(response);
+          });
+      }
+    });
+  }
+
   take(request: any) {
     return new Promise((resolve, reject) => {
       if(this.currentUserService.active && this.currentUserService.active.auth_token) {
@@ -87,6 +98,7 @@ export class RequestApi {
           .map((res: any) => res.json())
           .subscribe((response: any) => {
             this.update_request(response);
+            resolve();
           });
       }
     });
@@ -99,6 +111,7 @@ export class RequestApi {
           .map((res: any) => res.json())
           .subscribe((response: any) => {
             this.update_request(response);
+            resolve();
           });
       }
     });
@@ -111,6 +124,7 @@ export class RequestApi {
           .map((res: any) => res.json())
           .subscribe((response: any) => {
             this.update_request(response);
+            resolve();
           });
       }
     });

@@ -45,6 +45,14 @@ module API
             end
           end
 
+          desc 'Get a single request'
+          get do
+            authorize! :show, support_request
+
+            present support_request
+          end
+
+          desc "Get request's messages"
           get 'messages' do
             authorize! :show, support_request
 

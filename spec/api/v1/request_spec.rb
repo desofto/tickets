@@ -49,6 +49,66 @@ describe API::V1::Request, type: :api do
     end
   end
 
+  describe 'GET /api/v1/requests/:id' do
+    context 'admin' do
+      it 'sees any request' do
+        request = create(:request)
+
+        get "/api/v1/requests/#{request.id}?auth_token=#{admin.auth_token}"
+
+        expect(response.status).to eq 200
+        expect(json['id']).to eq request.id
+      end
+    end
+
+    context 'agent' do
+      it 'sees unassigned request' do
+        request = create(:request)
+
+        get "/api/v1/requests/#{request.id}?auth_token=#{agent.auth_token}"
+
+        expect(response.status).to eq 200
+        expect(json['id']).to eq request.id
+      end
+
+      it 'sees own request' do
+        request = create(:request, agent: agent)
+
+        get "/api/v1/requests/#{request.id}?auth_token=#{agent.auth_token}"
+
+        expect(response.status).to eq 200
+        expect(json['id']).to eq request.id
+      end
+
+      it 'does not see foreign request' do
+        request = create(:request, agent: another_agent)
+
+        get "/api/v1/requests/#{request.id}?auth_token=#{agent.auth_token}"
+
+        expect(response.status).to eq 404
+      end
+    end
+
+    context 'client' do
+      it 'sees own request' do
+        request = create(:request, client: client)
+
+        get "/api/v1/requests/#{request.id}?auth_token=#{client.auth_token}"
+
+        expect(response.status).to eq 200
+        expect(json['id']).to eq request.id
+      end
+
+      it 'does not see foreign request' do
+        request = create(:request, client: another_client)
+
+        get "/api/v1/requests/#{request.id}?auth_token=#{client.auth_token}"
+
+        expect(response.status).to eq 404
+      end
+    end
+  end
+
   describe 'POST /api/v1/requests' do
     context 'client' do
       it 'creates requests' do
