@@ -1,0 +1,9 @@
+<div class="agents-list">
+  <div class="row" *ngFor="let agent of list">
+    <div class="col-md-12">
+      Agent {{ agent.id }} - {{ agent.email }}
+    </div>
+  </div>
+  <lazy-load (visible)="loadNext()"></lazy-load>
+</div>
+<div class="clearfix"></div>

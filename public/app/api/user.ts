@@ -75,4 +75,31 @@ export class UserApi {
       }
     });
   }
+
+  agents(skip = 0) {
+    return new Promise((resolve, reject) => {
+      let auth_token = this.currentUserService.active && this.currentUserService.active.auth_token;
+      if(auth_token) {
+        this.http.get(`/api/v1/agents?auth_token=${auth_token}`)
+          .map(res => res.json())
+          .subscribe((data) => resolve(data.agents), (err) => {
+            reject(err);
+            this.notificationsService.error('Ouch!', err, {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: true,
+              clickToClose: true
+            });
+          });
+      } else {
+        reject();
+        this.notificationsService.error('Ouch!', 'No token', {
+          timeOut: 3000,
+          showProgressBar: true,
+          pauseOnHover: true,
+          clickToClose: true
+        });
+      }
+    });
+  }
 }
