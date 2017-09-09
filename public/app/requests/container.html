@@ -1,4 +1,5 @@
 <agents-new *ngIf="currentUser.admin"></agents-new>
 <agents-list *ngIf="currentUser.admin"></agents-list>
+
 <requests-list *ngIf="currentUser.active"></requests-list>
 <request-new *ngIf="!currentUser.active"></request-new>

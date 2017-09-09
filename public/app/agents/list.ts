@@ -5,7 +5,8 @@ import { UserApi } from '../api/index';
   selector: 'agents-list',
   templateUrl: './list.html',
   styles: [
-    '.agents-list { border: 1px solid #d7d7d7; padding: 1rem; margin-bottom: 2rem; }',
+    '.agents-list { border: 1px solid #d7d7d7; padding: 1rem; margin-bottom: 1rem; }',
+    'button.report { width: 100%; margin-bottom: 1rem; }',
   ]
 })
 
