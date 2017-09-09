@@ -16,7 +16,9 @@ module Ability
       end
 
       cannot :create,  ::Request
-      can    :update,  ::Request, agent_id: @user.id
+      can    :update,  ::Request do |request|
+        request.agent_id.blank? || request.agent_id == @user.id
+      end
       cannot :close,   ::Request
       cannot :open,    ::Request
       cannot :archive, ::Request

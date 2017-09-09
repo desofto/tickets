@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
     '.request-label { width: 10rem; }',
     '.request-message-header { border-bottom: 1px solid #d7d7d7; }',
     '.request-messages { margin-top: 2rem; }',
+    '.request-message { margin-bottom: 3rem; }',
   ]
 })
 

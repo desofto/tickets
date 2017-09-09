@@ -91,6 +91,18 @@ export class RequestApi {
     });
   }
 
+  post_message(request_id: number, message: string) {
+    return new Promise((resolve, reject) => {
+      if(this.currentUserService.active && this.currentUserService.active.auth_token) {
+        this.http.post(`/api/v1/requests/${request_id}/messages?auth_token=${this.currentUserService.active.auth_token}`, { message: { body: message } })
+          .map((res: any) => res.json())
+          .subscribe((response: any) => {
+            resolve();
+          });
+      }
+    });
+  }
+
   take(request: any) {
     return new Promise((resolve, reject) => {
       if(this.currentUserService.active && this.currentUserService.active.auth_token) {
