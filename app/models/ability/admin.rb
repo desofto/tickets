@@ -21,6 +21,8 @@ module Ability
       can :close,   ::Request
       can :open,    ::Request
       can :archive, ::Request
+
+      can :show,    ::Message
     end
   end
 end

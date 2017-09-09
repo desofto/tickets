@@ -19,6 +19,10 @@ module Ability
       can :close,   ::Request, client: @user
       can :open,    ::Request, client: @user
       cannot :archive, ::Request
+
+      can :show,    ::Message do |message|
+        message.client_id == @user.id
+      end
     end
   end
 end

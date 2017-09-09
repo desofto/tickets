@@ -12,6 +12,8 @@ class Request < ApplicationRecord
 
   after_initialize :set_opened
 
+  after_save :broadcast
+
   def close!
     update!(closed: Time.zone.now)
   end
@@ -26,6 +28,10 @@ class Request < ApplicationRecord
   end
 
   private
+
+  def broadcast
+    RequestBroadcastJob.perform_later(self)
+  end
 
   def set_opened
     self.opened ||= Time.zone.now

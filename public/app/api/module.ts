@@ -1,7 +1,7 @@
 import { NgModule }     from '@angular/core';
 import { HttpModule }   from '@angular/http';
 
-import { UserApi }   from './index';
+import { UserApi, RequestApi }   from './index';
 
 @NgModule({
   imports: [
@@ -12,7 +12,8 @@ import { UserApi }   from './index';
   exports: [
   ],
   providers: [
-    UserApi
+    UserApi,
+    RequestApi
   ]
 })
 

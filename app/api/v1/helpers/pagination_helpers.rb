@@ -3,9 +3,9 @@ module API
     module Helpers
       module PaginationHelpers
         def paginate_collection(collection, params = {})
-          page = params[:page].present? ? params[:page].to_i : 1
-          per_page = params[:per_page].present? ? params[:per_page].to_i : 50
-          collection[((page.to_i - 1) * per_page)...(page.to_i * per_page)]
+          skip = params[:skip].presence&.to_i || 0
+          per_page = params[:per_page].presence&.to_i || 50
+          collection[skip...(skip + per_page)]
         end
       end
     end

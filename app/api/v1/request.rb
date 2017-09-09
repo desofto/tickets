@@ -72,7 +72,7 @@ module API
           put 'take' do
             authorize! :take, support_request
 
-            support_request.update!(agent: current_user)
+            support_request.update!(agent: current_user) if support_request.agent.blank?
 
             present support_request
           end

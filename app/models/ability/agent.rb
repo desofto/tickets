@@ -20,6 +20,10 @@ module Ability
       cannot :close,   ::Request
       cannot :open,    ::Request
       cannot :archive, ::Request
+
+      can :show,    ::Message do |message|
+        message.agent_id.blank? || message.agent_id == @user.id
+      end
     end
   end
 end

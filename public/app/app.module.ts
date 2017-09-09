@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent }     from './app.component';
 import { UserLogin, UserLogout }  from './user/index';
 
+import { RequestList, RequestShow } from './requests/index';
+
 import { AuthGuard } from './guards/index';
 import { CurrentUser } from './services/index';
 
@@ -25,6 +27,7 @@ import { PageNotFoundComponent } from './shared/index';
   declarations: [
     AppComponent,
     UserLogin, UserLogout,
+    RequestList, RequestShow,
     PageNotFoundComponent
   ],
   providers: [

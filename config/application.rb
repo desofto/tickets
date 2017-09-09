@@ -21,5 +21,8 @@ module Tickets
     config.assets.enabled = true
 
     config.autoload_paths += %W(#{config.root}/app)
+
+    config.action_cable.mount_path = '/cable'
+    config.action_cable.disable_request_forgery_protection = !Rails.env.production?
   end
 end

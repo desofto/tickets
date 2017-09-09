@@ -16,6 +16,8 @@ gem 'cancancan'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
+gem 'redis'
+
 gem 'grape'
 gem 'grape-cancan'
 gem 'grape-entity'
