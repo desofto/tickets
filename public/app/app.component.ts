@@ -6,7 +6,10 @@ import { CurrentUser } from './services/index';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styles: [
+    '.panel { margin-bottom: 0; }',
+  ]
 })
 
 export class AppComponent implements OnDestroy {

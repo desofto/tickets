@@ -1,6 +1,18 @@
+<request-new *ngIf="currentUser.client"></request-new>
+
 <div *ngFor="let request of list" class="row">
   <div class="col-md-2">
-    {{ request.client.name }}
+    <div *ngIf="!currentUser.client">
+      {{ request.client.email }}
+    </div>
+    <div *ngIf="!currentUser.agent">
+      <span *ngIf="request.agent">
+        {{ request.agent.email }}
+      </span>
+      <span *ngIf="!request.agent">
+        Agent is not assigned yet
+      </span>
+    </div>
   </div>
   <div class="col-md-2">
     {{ request.created_at | date:'medium' }}
@@ -9,7 +21,7 @@
     {{ request.status }}
   </div>
   <div class="col-md-4">
-    <a href="" routerLink="/{{ request.id }}">
+    <a routerLink="/{{ request.id }}">
       {{ request.subject }}
     </a>
   </div>
@@ -17,10 +29,9 @@
     {{ request.messages_count }}
   </div>
   <div class="col-md-2">
-    <a href="" (click)="take(request)" *ngIf="currentUser.agent && !request.agent">Take</a>
-    <a href="" (click)="open(request)" *ngIf="(currentUser.client || currentUser.admin) && (request.status == 'closed')">Re-open</a>
-    <a href="" (click)="close(request)" *ngIf="(currentUser.client || currentUser.admin) && (request.status != 'closed')">Close</a>
-    <a href="" (click)="archive(request)" *ngIf="currentUser.admin">Archive</a>
+    <a (click)="take(request)" *ngIf="currentUser.agent && !request.agent">Take</a>
+    <a (click)="close(request)" *ngIf="(currentUser.client || currentUser.admin) && request.status != 'closed' && request.status != 'archived'">Close</a>
+    <a (click)="archive(request)" *ngIf="currentUser.admin && request.status != 'archived'">Archive</a>
   </div>
 </div>
 <lazy-load (visible)="loadNext()"></lazy-load>

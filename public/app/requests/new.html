@@ -1,1 +1,22 @@
-new request
+<div class="form">
+  <div class="row" *ngIf="!currentUser.active">
+    <div class="col-md-12">
+      <input placeholder="email" type="text" [(ngModel)]="email" name="email">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <input placeholder="subject" type="text" [(ngModel)]="subject" name="subject">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <textarea placeholder="message" [(ngModel)]="body" name="body"></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary" (click)="create()">Submit new request</button>
+    </div>
+  </div>
+</div>

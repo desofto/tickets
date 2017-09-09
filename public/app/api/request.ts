@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class RequestApi {
   private subject = new Subject<any>();
   public list: Array<any> = [];
+  private loading: boolean = false;
 
   constructor (
     private http: Http,
@@ -26,23 +27,26 @@ export class RequestApi {
     });
   }
 
+  private update_request(req: any) {
+    this.list.forEach((request: any, index: number, arr: Array<any>) => {
+      if(request.id == req.id) {
+        this.list[index] = req;
+        this.subject.next();
+      }
+    });
+  }
+
   setupActionCable() {
     if(this.currentUserService.active && this.currentUserService.active.auth_token) {
       let cable = ActionCable.createConsumer(`/cable?auth_token=${this.currentUserService.active.auth_token}`);
       let self = this;
       cable.subscriptions.create({ channel: 'RequestsChannel' }, {
         received(data: any) {
-          data = JSON.parse(data);
           if(data.is_new) {
             self.list.unshift(data.request);
             self.subject.next();
           } else {
-            self.list.forEach((request: any, index: number, arr: Array<any>) => {
-              if(request.id == data.request.id) {
-                arr[index] = data.request;
-                self.subject.next();
-              }
-            });
+            self.update_request(data.request);
           }
         }
       });
@@ -56,10 +60,12 @@ export class RequestApi {
 
   next() {
     return new Promise((resolve, reject) => {
-      if(this.currentUserService.active && this.currentUserService.active.auth_token) {
+      if(!this.loading && this.currentUserService.active && this.currentUserService.active.auth_token) {
+        this.loading = true;
         this.http.get(`/api/v1/requests?auth_token=${this.currentUserService.active.auth_token}&skip=${this.list.length}`)
           .map(res => res.json())
           .subscribe((response: any) => {
+            this.loading = false;
             if(response.requests) {
               this.list = this.list.concat(response.requests);
               this.subject.next();
@@ -72,5 +78,41 @@ export class RequestApi {
 
   subscribe(param: any): Subscription {
     return this.subject.asObservable().subscribe(param);
+  }
+
+  take(request: any) {
+    return new Promise((resolve, reject) => {
+      if(this.currentUserService.active && this.currentUserService.active.auth_token) {
+        this.http.put(`/api/v1/requests/${request.id}/take?auth_token=${this.currentUserService.active.auth_token}`, {})
+          .map((res: any) => res.json())
+          .subscribe((response: any) => {
+            this.update_request(response);
+          });
+      }
+    });
+  }
+
+  close(request: any) {
+    return new Promise((resolve, reject) => {
+      if(this.currentUserService.active && this.currentUserService.active.auth_token) {
+        this.http.put(`/api/v1/requests/${request.id}/close?auth_token=${this.currentUserService.active.auth_token}`, {})
+          .map((res: any) => res.json())
+          .subscribe((response: any) => {
+            this.update_request(response);
+          });
+      }
+    });
+  }
+
+  archive(request: any) {
+    return new Promise((resolve, reject) => {
+      if(this.currentUserService.active && this.currentUserService.active.auth_token) {
+        this.http.put(`/api/v1/requests/${request.id}/archive?auth_token=${this.currentUserService.active.auth_token}`, {})
+          .map((res: any) => res.json())
+          .subscribe((response: any) => {
+            this.update_request(response);
+          });
+      }
+    });
   }
 }

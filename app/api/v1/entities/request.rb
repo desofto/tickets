@@ -9,7 +9,7 @@ module API
         expose :client do |request|
           {
             id: request.client.id,
-            name: request.client.email
+            email: request.client.email
           }
         end
 

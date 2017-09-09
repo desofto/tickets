@@ -2,7 +2,12 @@ class RequestBroadcastJob < ApplicationJob
   queue_as :default
 
   def perform(request, is_new: false)
-    queue = 'requests_channel'
-    ActionCable.server.broadcast queue, request: API::V1::Entities::Request.represent(request), is_new: is_new
+    queue =
+      if is_new
+        'new_requests_channel'
+      else
+        'requests_channel'
+      end
+    ActionCable.server.broadcast queue, request.id
   end
 end

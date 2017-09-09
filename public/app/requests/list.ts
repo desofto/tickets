@@ -6,7 +6,10 @@ import { CurrentUser } from '../services/index';
 
 @Component({
   selector: 'requests-list',
-  templateUrl: './list.html'
+  templateUrl: './list.html',
+  styles: [
+    'a { cursor: pointer; }',
+  ]
 })
 
 export class RequestList implements OnInit, OnDestroy {
@@ -17,6 +20,18 @@ export class RequestList implements OnInit, OnDestroy {
     private request_api: RequestApi,
     private currentUser: CurrentUser,
   ) { }
+
+  take(request: any) {
+    this.request_api.take(request);
+  }
+
+  close(request: any) {
+    this.request_api.close(request);
+  }
+
+  archive(request: any) {
+    this.request_api.archive(request);
+  }
 
   loadNext() {
     this.request_api.next();
