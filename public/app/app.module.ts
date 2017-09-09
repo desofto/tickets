@@ -14,7 +14,7 @@ import { RequestList, RequestShow } from './requests/index';
 import { AuthGuard } from './guards/index';
 import { CurrentUser } from './services/index';
 
-import { PageNotFoundComponent } from './shared/index';
+import { LazyLoad, PageNotFoundComponent } from './shared/index';
 
 @NgModule({
   imports: [
@@ -28,7 +28,7 @@ import { PageNotFoundComponent } from './shared/index';
     AppComponent,
     UserLogin, UserLogout,
     RequestList, RequestShow,
-    PageNotFoundComponent
+    LazyLoad, PageNotFoundComponent
   ],
   providers: [
     AuthGuard,

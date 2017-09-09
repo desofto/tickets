@@ -50,9 +50,11 @@ export class RequestApi {
       this.http.get(`/api/v1/requests?auth_token=${this.currentUserService.active.auth_token}&skip=${this.list.length}`)
         .map(res => res.json())
         .subscribe((response: any) => {
-          this.list = this.list.concat(response.requests);
-          this.subject.next();
-          resolve();
+          if(response.requests) {
+            this.list = this.list.concat(response.requests);
+            this.subject.next();
+            resolve();
+          }
         });
     });
   }
