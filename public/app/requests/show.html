@@ -1,5 +1,74 @@
-<div class="row" *ngIf="request">
-  <div class="col-md-2">
-    {{ request.status }}
+<div class="request" *ngIf="request">
+  <div class="request-header">
+    <div class="request-title">
+      {{ request.subject }}
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="request-info">
+      <div class="request-data">
+        Added by <a href="mailto:{{ request.client.email }}">{{ request.client.email }}</a>
+        on {{ request.created_at | date : 'medium' }}.
+        Updated on {{ request.updated_at | date : 'medium' }}.
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="request-label">
+        Status:
+      </div>
+      <div class="request-data">
+        {{ request.status }}
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="request-label">
+        Assignee:
+      </div>
+      <div class="request-data">
+        <span *ngIf="request.agent">
+          {{ request.agent }}
+        </span>
+        <span *ngIf="!request.agent">
+          -
+        </span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
   </div>
+  <div class="clearfix"></div>
+
+  <div class="request-messages">
+    <div class="request-message" *ngFor="let message of request.messages">
+      <div class="request-message-header">
+        <div class="pull-left">
+          <div class="request-label">
+            Author:
+          </div>
+          <div class="request-data">
+            {{ message.author.email }}
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="pull-left">
+          <div class="request-label">
+            Posted on:
+          </div>
+          <div class="request-data">
+            {{ message.created_at | date : 'medium' }}
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="request-message-body">
+        {{ message.body }}
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="clearfix"></div>
 </div>

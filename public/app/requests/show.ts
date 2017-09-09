@@ -5,7 +5,15 @@ import { RequestApi } from '../api/index';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  templateUrl: './show.html'
+  templateUrl: './show.html',
+  styles: [
+    '.request-header { background-color: #ffffdd; border: 1px solid #d7d7d7; padding: 1rem; }',
+    '.request-title { font-weight: bolder; height: 3rem; }',
+    '.request-label, .request-data { float: left; height: 3rem; }',
+    '.request-label { width: 10rem; }',
+    '.request-message-header { border-bottom: 1px solid #d7d7d7; }',
+    '.request-messages { margin-top: 2rem; }',
+  ]
 })
 
 export class RequestShow implements OnInit, OnDestroy {

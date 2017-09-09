@@ -28,6 +28,7 @@ module API
       represent ::Agent, with: API::V1::Entities::User
 
       represent ::Request, with: API::V1::Entities::Request
+      represent ::Message, with: API::V1::Entities::Message
 
       mount API::V1::Auth
 

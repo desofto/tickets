@@ -22,7 +22,7 @@ module API
         expose :closed, format_with: :iso_timestamp, if: -> (request, opts) { request.closed.present? }
         expose :archived, format_with: :iso_timestamp, if: -> (request, opts) { request.archived.present? }
 
-        expose :messages, unless: -> (request, opts) { opts[:collection] }
+        expose :messages, with: API::V1::Entities::Message, unless: -> (request, opts) { opts[:collection] }
 
         expose :messages_count do |request|
           request.messages.count

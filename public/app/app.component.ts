@@ -8,7 +8,11 @@ import { CurrentUser } from './services/index';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styles: [
+    '.wrapper { background-color: #F1EFE2; padding-left: 1rem; padding-right: 1rem; }',
+    '.wrapper2 { background-color: white; padding: 1rem; }',
     '.panel { margin-bottom: 0; }',
+    '.panel .panel-heading { background-color: #507AAA; color: white; }',
+    '.panel a { color: white; }',
   ]
 })
 
