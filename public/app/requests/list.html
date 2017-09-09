@@ -1,3 +1,17 @@
-<div *ngFor="let request of list">
-  {{ request.id }}
+<div *ngFor="let request of list" class="row">
+  <div class="col-md-2">
+    {{ request.client.name }}
+  </div>
+  <div class="col-md-6">
+    {{ request.subject }}
+  </div>
+  <div class="col-md-1">
+    {{ request.messages_count }}
+  </div>
+  <div class="col-md-1">
+    <a href="" (click)="take(request)" *ngIf="currentUser.agent">Take</a>
+    <a href="" (click)="open(request)" *ngIf="currentUser.client || currentUser.admin">Re-open</a>
+    <a href="" (click)="close(request)" *ngIf="currentUser.client || currentUser.admin">Close</a>
+    <a href="" (click)="archive(request)" *ngIf="currentUser.admin">Archive</a>
+  </div>
 </div>

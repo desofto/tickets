@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :request do
+    status 'open'
     client
     sequence(:subject) { |n| "Request #{n}" }
 

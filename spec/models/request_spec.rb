@@ -29,8 +29,8 @@ describe Request do
   describe 'scopes' do
     before do
       @open = create_list(:request, 2)
-      @closed = create_list(:request, 2, closed: Time.zone.now)
-      @archived = create_list(:request, 2, closed: Time.zone.now, archived: Time.zone.now)
+      @closed = create_list(:request, 2, status: 'closed')
+      @archived = create_list(:request, 2, status: 'archived')
     end
 
     it 'open' do

@@ -6,34 +6,29 @@ class Request < ApplicationRecord
 
   has_many :messages, dependent: :destroy
 
-  scope :open, -> { where(closed: nil) }
-  scope :closed, -> { where.not(closed: nil).where(archived: nil) }
-  scope :archived, -> { where.not(archived: nil) }
+  enum status: %i(open answered closed archived)
 
   after_initialize :set_opened
 
   after_save :broadcast
 
-  def close!
-    update!(closed: Time.zone.now)
-  end
-
-  def open!
-    update!(closed: nil)
-  end
-
-  def archive!
-    update!(closed: Time.zone.now) if closed.blank?
-    update!(archived: Time.zone.now)
-  end
+  before_save :update_timestamps
 
   private
 
+  def update_timestamps
+    self.opened   ||= Time.zone.now if open?
+    self.answered ||= Time.zone.now if answered?
+    self.closed   ||= Time.zone.now if closed?
+    self.archived ||= Time.zone.now if archived?
+  end
+
   def broadcast
-    RequestBroadcastJob.perform_later(self, is_new: id_was.blank?)
+    RequestBroadcastJob.perform_later(self, is_new: id_before_last_save.blank?)
   end
 
   def set_opened
+    self.status ||= 'open'
     self.opened ||= Time.zone.now
   end
 end

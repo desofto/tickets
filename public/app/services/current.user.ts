@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 
@@ -9,6 +10,9 @@ import { Subject } from 'rxjs/Subject';
 
 export class CurrentUser {
   private subject = new Subject<any>();
+  public admin: boolean = false;
+  public client: boolean = false;
+  public agent: boolean = false;
 
   constructor() {
     // Load user from localStorage
@@ -22,6 +26,10 @@ export class CurrentUser {
     } catch(e) {
       this.active = null;
     }
+
+    this.admin = this.active.role == 'Admin';
+    this.client = this.active.role == 'Client';
+    this.agent = this.active.role == 'Agent';
 
     this.subject.next(this.active);
   }
@@ -42,7 +50,7 @@ export class CurrentUser {
   }
 
   // Allows to subscribe on changes
-  onChange(): Observable<any> {
-    return this.subject.asObservable();
+  onChange(param: any): Subscription {
+    return this.subject.asObservable().subscribe(param);
   }
 }

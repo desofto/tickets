@@ -101,6 +101,36 @@ describe API::V1::Request, type: :api do
         expect(response.status).to eq 201
         expect(req.messages.take.body).to eq 'another message'
       end
+
+      it 'makes request answered' do
+        req = create(:request, agent: agent)
+
+        data = {
+          body: 'another message'
+        }
+
+        expect do
+          post "/api/v1/requests/#{req.id}/messages?auth_token=#{agent.auth_token}", params: { message: data }
+        end.to change(req.messages, :count).by(1)
+
+        expect(response.status).to eq 201
+        expect(req.reload).to be_answered
+      end
+
+      it 're-opens closed request' do
+        req = create(:request, client: client, status: 'closed')
+
+        data = {
+          body: 'another message'
+        }
+
+        expect do
+          post "/api/v1/requests/#{req.id}/messages?auth_token=#{client.auth_token}", params: { message: data }
+        end.to change(req.messages, :count).by(1)
+
+        expect(response.status).to eq 201
+        expect(req.reload).to be_open
+      end
     end
   end
 
@@ -133,34 +163,13 @@ describe API::V1::Request, type: :api do
         put "/api/v1/requests/#{req.id}/close?auth_token=#{client.auth_token}"
 
         expect(response.status).to eq 200
-        expect(req.reload.closed).not_to be_blank
+        expect(req.reload).to be_closed
       end
 
       it 'cannot close foreign request' do
         req = create(:request, client: another_client)
 
         put "/api/v1/requests/#{req.id}/close?auth_token=#{client.auth_token}"
-
-        expect(response.status).to eq 404
-      end
-    end
-  end
-
-  describe 'PUT /api/v1/requests/:id/open' do
-    context 'client' do
-      it 'can re-open own request' do
-        req = create(:request, closed: Time.zone.now, client: client)
-
-        put "/api/v1/requests/#{req.id}/open?auth_token=#{client.auth_token}"
-
-        expect(response.status).to eq 200
-        expect(req.reload.closed).to be_blank
-      end
-
-      it 'cannot close foreign request' do
-        req = create(:request, closed: Time.zone.now, client: another_client)
-
-        put "/api/v1/requests/#{req.id}/open?auth_token=#{client.auth_token}"
 
         expect(response.status).to eq 404
       end
@@ -175,8 +184,7 @@ describe API::V1::Request, type: :api do
         put "/api/v1/requests/#{req.id}/archive?auth_token=#{admin.auth_token}"
 
         expect(response.status).to eq 200
-        expect(req.reload.closed).not_to be_blank
-        expect(req.reload.archived).not_to be_blank
+        expect(req.reload).to be_archived
       end
     end
   end

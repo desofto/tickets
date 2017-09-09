@@ -8,6 +8,7 @@ import { CurrentUser } from '../services/index';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 
@@ -56,7 +57,7 @@ export class RequestApi {
     });
   }
 
-  subscribe(param: any) {
-    this.subject.asObservable().subscribe(param);
+  subscribe(param: any): Subscription {
+    return this.subject.asObservable().subscribe(param);
   }
 }

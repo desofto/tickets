@@ -4,13 +4,18 @@ module API
       class Request < Base
         expose :subject
 
+        expose :status
+
         expose :client do |request|
-          { client_id: request.client_id }
+          {
+            id: request.client.id,
+            name: request.client.email
+          }
         end
 
         expose :agent do |request|
           next if request.agent.blank?
-          { agent_id: request.agent_id }
+          { id: request.agent_id }
         end
 
         expose :opened, format_with: :iso_timestamp, if: -> (request, opts) { request.opened.present? }

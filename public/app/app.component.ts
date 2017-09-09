@@ -19,7 +19,7 @@ export class AppComponent implements OnDestroy {
   ) {
     // store currentUser if any and subscribe for changes
     this.currentUser = this.currentUserService.active;
-    this.subscription = this.currentUserService.onChange().subscribe(currentUser => {
+    this.subscription = this.currentUserService.onChange((currentUser: any) => {
       // setTimeout fires view updating
       setTimeout(() => this.currentUser = currentUser);
     });

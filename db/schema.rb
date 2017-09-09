@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908143831) do
+ActiveRecord::Schema.define(version: 20170909125650) do
 
   create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "request_id"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20170908143831) do
     t.datetime "archived"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "answered"
     t.index ["agent_id"], name: "index_requests_on_agent_id"
     t.index ["archived"], name: "index_requests_on_archived"
     t.index ["client_id"], name: "index_requests_on_client_id"

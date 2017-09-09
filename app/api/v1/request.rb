@@ -64,6 +64,12 @@ module API
 
             support_request.messages.create(body: params[:message][:body])
 
+            if current_user.client?
+              support_request.open!
+            elsif current_user.agent? || current_user.admin?
+              support_request.answered!
+            end
+
             present 'ok'
             status :created
           end
@@ -81,16 +87,7 @@ module API
           put 'close' do
             authorize! :close, support_request
 
-            support_request.close!
-
-            present support_request
-          end
-
-          desc 'Open request'
-          put 'open' do
-            authorize! :open, support_request
-
-            support_request.open!
+            support_request.closed!
 
             present support_request
           end
@@ -99,7 +96,7 @@ module API
           put 'archive' do
             authorize! :archive, support_request
 
-            support_request.archive!
+            support_request.archived!
 
             present support_request
           end
