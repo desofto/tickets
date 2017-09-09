@@ -33,7 +33,7 @@ module API
           authorize! :create, ::Request
 
           request = ::Request.create(client: current_user, subject: params[:request][:subject])
-          message = request.messages.create(body: params[:request][:body])
+          message = request.messages.create(author: current_user, body: params[:request][:body])
           present request
         end
 
@@ -70,7 +70,7 @@ module API
           post 'messages' do
             authorize! :update, support_request
 
-            support_request.messages.create(body: params[:message][:body])
+            support_request.messages.create(author: current_user, body: params[:message][:body])
 
             if current_user.client?
               support_request.open!
