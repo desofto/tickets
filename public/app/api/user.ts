@@ -34,6 +34,8 @@ export class UserApi {
             this.currentUserService.set(user);
             resolve();
           }
+        }, (err) => {
+          reject(err.json().errors.join(', '));
         });
     });
   }

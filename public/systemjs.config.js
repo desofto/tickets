@@ -28,6 +28,10 @@
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
       'ts-md5/dist/md5': 'npm:ts-md5/dist/md5.js',
       'actioncable-js': 'npm:actioncable-js/dist/action_cable.js',
+      'angular2-notifications': 'npm:angular2-notifications/dist/index.js',
+      '@angular/platform-browser/animations': 'npm:@angular/platform-browser/bundles/platform-browser-animations.umd.js',
+      '@angular/animations': 'npm:@angular/animations/bundles/animations.umd.js',
+      '@angular/animations/browser': 'npm:@angular/animations/bundles/animations-browser.umd.js',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

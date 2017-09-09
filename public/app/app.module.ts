@@ -1,7 +1,9 @@
 import { NgModule }         from '@angular/core';
 import { Router }           from '@angular/router';
 import { BrowserModule }    from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule }      from '@angular/forms';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 import { ApiModule }        from './api/module';
 
@@ -21,6 +23,9 @@ import { LazyLoad, PageNotFoundComponent } from './shared/index';
   imports: [
     BrowserModule,
     FormsModule,
+
+    BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot(),
 
     AppRoutingModule,
     ApiModule

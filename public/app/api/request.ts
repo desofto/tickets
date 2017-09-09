@@ -91,16 +91,28 @@ export class RequestApi {
     });
   }
 
-  create(subject: string, body: string, email = '') {
+  create(subject: string, body: string, email = '', password = '') {
     return new Promise((resolve, reject) => {
       if(this.currentUserService.active && this.currentUserService.active.auth_token) {
-        this.http.post(`/api/v1/requests?auth_token=${this.currentUserService.active.auth_token}`, { request: { subject: subject, body: body, email: email } })
+        this.http.post(`/api/v1/requests?auth_token=${this.currentUserService.active.auth_token}`, { request: { subject: subject, body: body } })
           .map((res: any) => res.json())
           .subscribe((response: any) => {
             this.update_request(response); // it is unnecessary because all updates come thru active cable
             resolve(response);
           });
       }
+    });
+  }
+
+  create_unauthenticated(subject: string, body: string, email: string, password: string) {
+    return new Promise((resolve, reject) => {
+      this.http.post(`/api/v1/requests`, { request: { subject: subject, body: body }, user: { email: email, password: password } })
+        .map((res: any) => res.json())
+        .subscribe((response: any) => {
+          resolve(response);
+        }, (err: any) => {
+          reject(err._body);
+        });
     });
   }
 

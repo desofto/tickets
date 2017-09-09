@@ -2,7 +2,7 @@ require 'sidekiq/web'
 require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { confirmations: 'confirmations' }
 
   if Rails.env.development?
     mount Sidekiq::Web => '/sidekiq'

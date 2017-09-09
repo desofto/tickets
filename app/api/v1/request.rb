@@ -27,14 +27,27 @@ module API
           requires :request, type: Hash do
             requires :subject, type: String
             requires :body, type: String
+            optional :email, type: String
+          end
+          optional :user, type: Hash do
+            requires :email, type: String
+            requires :password, type: String
           end
         end
         post do
           authorize! :create, ::Request
 
-          request = ::Request.create(client: current_user, subject: params[:request][:subject])
-          message = request.messages.create(author: current_user, body: params[:request][:body])
-          present request
+          client = current_user
+
+          if !client && params[:user].present?
+            client = Client.create!(email: params[:user][:email], password: params[:user][:password])
+            alert = 'Account was created. Please check your email and click a link'
+          end
+
+          request = ::Request.create!(client: client, subject: params[:request][:subject])
+          message = request.messages.create!(author: client, body: params[:request][:body])
+
+          present alert || request
         end
 
         desc "Request's messages"

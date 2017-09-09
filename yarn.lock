@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@angular/animations@^4.4.0-RC.0":
+  version "4.4.0-RC.0"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-4.4.0-RC.0.tgz#cfd5937ce11eaba03ae3ebd778b0871b77539665"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/common@~4.3.5":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-4.3.6.tgz#ed37e9307c7506dd834797c1a6cf675e52b5b6ee"
@@ -67,6 +73,10 @@ actioncable-js@^5.0.0-rc2:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+angular2-notifications@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/angular2-notifications/-/angular2-notifications-0.7.7.tgz#50471d7325483cd0679eeb670c6d3a4618647a2f"
 
 balanced-match@^1.0.0:
   version "1.0.0"
