@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent }     from './app.component';
 import { UserLogin, UserLogout }  from './user/index';
 
-import { RequestList, RequestShow } from './requests/index';
+import { RequestsContainer, RequestList, RequestShow, RequestNew } from './requests/index';
 
 import { AuthGuard } from './guards/index';
 import { CurrentUser } from './services/index';
@@ -27,7 +27,7 @@ import { LazyLoad, PageNotFoundComponent } from './shared/index';
   declarations: [
     AppComponent,
     UserLogin, UserLogout,
-    RequestList, RequestShow,
+    RequestsContainer, RequestList, RequestShow, RequestNew,
     LazyLoad, PageNotFoundComponent
   ],
   providers: [

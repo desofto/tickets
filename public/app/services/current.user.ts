@@ -27,9 +27,9 @@ export class CurrentUser {
       this.active = null;
     }
 
-    this.admin = this.active.role == 'Admin';
-    this.client = this.active.role == 'Client';
-    this.agent = this.active.role == 'Agent';
+    this.admin = this.active && this.active.role == 'Admin';
+    this.client = this.active && this.active.role == 'Client';
+    this.agent = this.active && this.active.role == 'Agent';
 
     this.subject.next(this.active);
   }

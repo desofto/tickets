@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { RequestApi } from '../api/index';
 import { CurrentUser } from '../services/index';
 
-
 @Component({
+  selector: 'requests-list',
   templateUrl: './list.html'
 })
 

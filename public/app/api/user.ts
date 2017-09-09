@@ -41,10 +41,14 @@ export class UserApi {
   // clear current user info in the user storeage and tries to logout on backend
   logout() {
     return new Promise((resolve, reject) => {
-      let auth_token = this.currentUserService.active.auth_token;
-      // remove user from local storage to log user out
-      this.currentUserService.clear();
-      this.http.delete(`/api/v1/sign_out?auth_token=${auth_token}`).subscribe(() => resolve());
+      let auth_token = this.currentUserService.active && this.currentUserService.active.auth_token;
+      if(auth_token) {
+        // remove user from local storage to log user out
+        this.currentUserService.clear();
+        this.http.delete(`/api/v1/sign_out?auth_token=${auth_token}`).subscribe(() => resolve());
+      } else {
+        resolve();
+      }
     });
   }
 }

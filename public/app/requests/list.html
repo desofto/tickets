@@ -9,8 +9,9 @@
     {{ request.status }}
   </div>
   <div class="col-md-4">
-
-    {{ request.subject }}
+    <a href="" routerLink="/{{ request.id }}">
+      {{ request.subject }}
+    </a>
   </div>
   <div class="col-md-1">
     {{ request.messages_count }}
