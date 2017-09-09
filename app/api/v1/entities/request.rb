@@ -15,7 +15,10 @@ module API
 
         expose :agent do |request|
           next if request.agent.blank?
-          { id: request.agent_id }
+          {
+            id: request.agent_id,
+            email: request.agent.email
+          }
         end
 
         expose :opened, format_with: :iso_timestamp, if: -> (request, opts) { request.opened.present? }

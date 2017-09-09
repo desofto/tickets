@@ -70,6 +70,8 @@ module API
           post 'messages' do
             authorize! :update, support_request
 
+            support_request.update!(agent: current_user) if support_request.agent.blank? && current_user.agent?
+
             support_request.messages.create(author: current_user, body: params[:message][:body])
 
             if current_user.client?
