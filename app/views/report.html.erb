@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<body>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-5">
+          Total agents:
+        </div>
+        <div class="col-md-1">
+          <%= @data[:agents][:total] %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-5">
+          New agents:
+        </div>
+        <div class="col-md-1">
+          <%= @data[:agents][:new] %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-5">
+          Opened requests:
+        </div>
+        <div class="col-md-1">
+          <%= @data[:requests][:opened] %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-5">
+          Closed requests:
+        </div>
+        <div class="col-md-1">
+          <%= @data[:requests][:closed] %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <% @data[:agents][:requests].each do |stats| %>
+      <%= stats[:email] %> - closed <%= stats[:closed] %> requests
+    <% end %>
+  </div>
+
+  <div>
+    <% @data[:agents][:messages].each do |stats| %>
+      <%= stats[:email] %> - wrote <%= stats[:messages] %> messages
+    <% end %>
+  </div>
+</body>

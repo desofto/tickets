@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   root to: 'home#index'
+  get '/report', to: 'home#report'
 
   mount API::Root => '/api/'
 

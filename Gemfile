@@ -22,6 +22,9 @@ gem 'grape'
 gem 'grape-cancan'
 gem 'grape-entity'
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'listen', '>= 3.0.5', '< 3.2'
