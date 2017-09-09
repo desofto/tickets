@@ -23,6 +23,7 @@ export class RequestApi {
     cable.subscriptions.create({ channel: 'RequestsChannel' }, {
       received(data: any) {
         console.log(data);
+        this.subject.next();
       }
     });
   }
@@ -37,6 +38,7 @@ export class RequestApi {
       this.http.get(`/api/v1/requests?auth_token=${this.currentUserService.active.auth_token}&skip=${this.list.length}`)
         .subscribe((response: any) => {
           this.list = this.list.concat(response.requests);
+          this.subject.next();
           resolve();
         });
     });
