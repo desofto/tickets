@@ -13,6 +13,7 @@ import { UserLogin, UserLogout }  from './user/index';
 
 import { RequestsContainer, RequestList, RequestShow, RequestNew } from './requests/index';
 import { MessageNew } from './requests/messages/index';
+import { AgentNew } from './agents/index';
 
 import { AuthGuard } from './guards/index';
 import { CurrentUser } from './services/index';
@@ -35,6 +36,7 @@ import { LazyLoad, PageNotFoundComponent } from './shared/index';
     UserLogin, UserLogout,
     RequestsContainer, RequestList, RequestShow, RequestNew,
     MessageNew,
+    AgentNew,
     LazyLoad, PageNotFoundComponent
   ],
   providers: [

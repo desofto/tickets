@@ -20,6 +20,21 @@ module API
         present :agents, paginate_collection(agents, params)
         present :total, agents.count
       end
+
+      desc "Create an agent's account"
+      params do
+        requires :agent, type: Hash do
+          requires :email, type: String
+          requires :password, type: String
+        end
+      end
+      post '/agents' do
+        authorize! :create, ::Agent
+
+        agent = Agent.create(email: params[:agent][:email], password: params[:agent][:password])
+
+        present agent
+      end
     end
   end
 end

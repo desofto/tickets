@@ -1,5 +1,6 @@
 import { Injectable }     from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { NotificationsService, SimpleNotificationsComponent } from "angular2-notifications"
 import { CurrentUser } from '../services/index';
 import { Md5 } from 'ts-md5/dist/md5';
 import 'rxjs/add/operator/map';
@@ -12,7 +13,8 @@ import 'rxjs/add/operator/map';
 export class UserApi {
   constructor (
     private http: Http,
-    private currentUserService: CurrentUser
+    private currentUserService: CurrentUser,
+    private notificationsService: NotificationsService,
   ) {
   }
 
@@ -44,6 +46,32 @@ export class UserApi {
         this.http.delete(`/api/v1/sign_out?auth_token=${auth_token}`).subscribe(() => resolve());
       } else {
         resolve();
+      }
+    });
+  }
+
+  create_agent(email: string, password: string) {
+    return new Promise((resolve, reject) => {
+      let auth_token = this.currentUserService.active && this.currentUserService.active.auth_token;
+      if(auth_token) {
+        this.http.post(`/api/v1/agents?auth_token=${auth_token}`, { agent: { email: email, password: password } })
+          .subscribe(() => resolve(), (err) => {
+            reject(err);
+            this.notificationsService.error('Ouch!', err, {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: true,
+              clickToClose: true
+            });
+          });
+      } else {
+        reject();
+        this.notificationsService.error('Ouch!', 'No token', {
+          timeOut: 3000,
+          showProgressBar: true,
+          pauseOnHover: true,
+          clickToClose: true
+        });
       }
     });
   }
