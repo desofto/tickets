@@ -30,7 +30,7 @@ class Request < ApplicationRecord
   private
 
   def broadcast
-    RequestBroadcastJob.perform_later(self)
+    RequestBroadcastJob.perform_later(self, is_new: id_was.blank?)
   end
 
   def set_opened

@@ -3,6 +3,6 @@ class MessageBroadcastJob < ApplicationJob
 
   def perform(message)
     queue = "messages_channel_#{message.request_id}"
-    ActionCable.server.broadcast queue, message: message
+    ActionCable.server.broadcast queue, message: API::V1::Entities::Message.represent(message)
   end
 end

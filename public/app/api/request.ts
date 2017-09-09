@@ -20,10 +20,21 @@ export class RequestApi {
     private currentUserService: CurrentUser,
   ) {
     let cable = ActionCable.createConsumer(`/cable?auth_token=${this.currentUserService.active.auth_token}`);
+    let self = this;
     cable.subscriptions.create({ channel: 'RequestsChannel' }, {
       received(data: any) {
-        console.log(data);
-        this.subject.next();
+        data = JSON.parse(data);
+        if(data.is_new) {
+          self.list.unshift(data.request);
+          self.subject.next();
+        } else {
+          self.list.forEach((request: any, index: number, arr: Array<any>) => {
+            if(request.id == data.request.id) {
+              arr[index] = data.request;
+              self.subject.next();
+            }
+          });
+        }
       }
     });
   }
@@ -36,6 +47,7 @@ export class RequestApi {
   next() {
     return new Promise((resolve, reject) => {
       this.http.get(`/api/v1/requests?auth_token=${this.currentUserService.active.auth_token}&skip=${this.list.length}`)
+        .map(res => res.json())
         .subscribe((response: any) => {
           this.list = this.list.concat(response.requests);
           this.subject.next();
