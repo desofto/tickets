@@ -91,6 +91,19 @@ export class RequestApi {
     });
   }
 
+  create(subject: string, body: string, email = '') {
+    return new Promise((resolve, reject) => {
+      if(this.currentUserService.active && this.currentUserService.active.auth_token) {
+        this.http.post(`/api/v1/requests?auth_token=${this.currentUserService.active.auth_token}`, { request: { subject: subject, body: body, email: email } })
+          .map((res: any) => res.json())
+          .subscribe((response: any) => {
+            this.update_request(response); // it is unnecessary because all updates come thru active cable
+            resolve(response);
+          });
+      }
+    });
+  }
+
   post_message(request_id: number, message: string) {
     return new Promise((resolve, reject) => {
       if(this.currentUserService.active && this.currentUserService.active.auth_token) {

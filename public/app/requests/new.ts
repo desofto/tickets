@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RequestApi } from '../api/index';
 
 import { CurrentUser } from '../services/index';
@@ -13,9 +13,23 @@ import { CurrentUser } from '../services/index';
   ]
 })
 
-export class RequestNew {
+export class RequestNew implements OnInit {
+  private email: string = '';
+  private subject: string = '';
+  private body: string = '';
+
   constructor(
     private request_api: RequestApi,
     private currentUser: CurrentUser,
   ) { }
+
+  create() {
+    this.request_api.create(this.subject, this.body, this.email).then(() => this.ngOnInit());
+  }
+
+  ngOnInit() {
+    this.email = '';
+    this.subject = '';
+    this.body = '';
+  }
 }
