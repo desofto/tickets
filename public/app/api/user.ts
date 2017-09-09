@@ -1,5 +1,5 @@
 import { Injectable }     from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { CurrentUser } from '../services/index';
 import { Md5 } from 'ts-md5/dist/md5';
 import 'rxjs/add/operator/map';
@@ -19,13 +19,7 @@ export class UserApi {
   // try to login on backend and store retrived information in the user storage
   login(email: string, password: string) {
     return new Promise((resolve, reject) => {
-      const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-      const options = new RequestOptions({ headers: headers });
-      const body: URLSearchParams = new URLSearchParams();
-      body.set('email', email);
-      body.set('password', password);
-
-      this.http.post('/api/v1/sign_in', body.toString(), options)
+      this.http.post('/api/v1/sign_in', { email: email, password: password })
         .subscribe((response: Response) => {
           // login successful if there are both correct status and session id
           let user = response.json();

@@ -17,7 +17,7 @@ import { UserApi } from '../api/index';
 })
 
 export class UserLogin implements OnInit {
-  username: string;
+  email: string;
   password: string;
 
   constructor(
@@ -27,13 +27,13 @@ export class UserLogin implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.username = '';
+    this.email = '';
     this.password = '';
   }
 
   login() {
     // Login user, store user data and redirect to root at end
-    this.user_api.login(this.username, this.password)
+    this.user_api.login(this.email, this.password)
       .then(() => this.router.navigate(['/']))
       .catch((err) => {
         this.notificationsService.error('Ouch!', err, {
