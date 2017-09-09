@@ -37,9 +37,33 @@ export class RequestList implements OnInit, OnDestroy {
     this.request_api.next();
   }
 
+  private sort_and_store_list(list: Array<any>) {
+    this.list = list.sort((r1, r2) => {
+      let p1 = this.status_to_int(r1.status);
+      let p2 = this.status_to_int(r2.status);
+      if(p1 > p2) {
+        return 1;
+      }
+      if(p1 < p2) {
+        return -1;
+      }
+      if(r1.updated_at > r2.updated_at) {
+        return 1;
+      }
+      if(r1.updated_at < r2.updated_at) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  private status_to_int(status: string): number {
+    return ['open', 'answered', 'closed', 'archived'].indexOf(status);
+  }
+
   ngOnInit() {
-    this.request_api.init().then(() => this.list = this.request_api.list);
-    this.subscribtion = this.request_api.subscribe(() => this.list = this.request_api.list);
+    this.request_api.init().then(() => this.sort_and_store_list(this.request_api.list));
+    this.subscribtion = this.request_api.subscribe(() => this.sort_and_store_list(this.request_api.list));
   }
 
   ngOnDestroy() {

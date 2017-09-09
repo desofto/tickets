@@ -14,7 +14,7 @@ class Request < ApplicationRecord
 
   before_save :update_timestamps
 
-  default_scope { reorder(updated_at: :desc) }
+  default_scope { reorder(:status).order(updated_at: :desc) }
 
   private
 

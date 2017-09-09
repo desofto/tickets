@@ -29,7 +29,7 @@
     {{ request.messages_count }}
   </div>
   <div class="col-md-2">
-    <a (click)="take(request)" *ngIf="currentUser.agent && !request.agent">Take</a>
+    <a (click)="take(request)" *ngIf="currentUser.agent && !request.agent && request.status == 'open'">Take</a>
     <a (click)="close(request)" *ngIf="(currentUser.client || currentUser.admin) && request.status != 'closed' && request.status != 'archived'">Close</a>
     <a (click)="archive(request)" *ngIf="currentUser.admin && request.status != 'archived'">Archive</a>
   </div>
