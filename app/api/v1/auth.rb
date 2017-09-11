@@ -19,6 +19,7 @@ module API
       desc 'Sign In'
       post '/sign_in' do
         if user
+          # reset the token
           user.reset_authentication_token
           status :created
           present user, with: API::V1::Entities::Me
@@ -29,6 +30,7 @@ module API
 
       desc 'Sign out'
       delete '/sign_out' do
+        # reset the token again, so nobody could use it
         current_user.reset_authentication_token
         {}
       end
